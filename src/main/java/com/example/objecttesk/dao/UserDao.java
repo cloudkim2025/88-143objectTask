@@ -6,7 +6,7 @@ import java.sql.*;
 public class UserDao {
     private final ConnectionMaker connectionMaker;
 
-    // 생성자를 통해 `ConnectionMaker` 주입받음
+    // 생성자를 통해 ConnectionMaker를 외부에서 주입받음
     public UserDao(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
