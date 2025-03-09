@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'application'  // ✅ 추가
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot Web (REST API 개발을 위한 필수 의존성)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // MySQL JDBC 드라이버
+    implementation 'mysql:mysql-connector-java:8.0.29'
+
+    // JPA 설정 (ORM을 사용하려면 필요)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Lombok (Getter, Setter 자동 생성)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Spring Boot Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+application {
+    mainClass = 'com.example.objecttesk.Main'  // ✅ Main 클래스 지정
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

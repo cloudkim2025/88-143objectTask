@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: object-tesk
+  datasource:
+    url: jdbc:mysql://localhost:3306/myproject_db?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
