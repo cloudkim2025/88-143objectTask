@@ -3,19 +3,13 @@ package com.example.objecttesk.dao;
 import com.example.objecttesk.domain.User;
 import java.sql.*;
 
-public class UserDao {
-    private final String url = "jdbc:mysql://localhost:3306/myproject_db";
-    private final String userName = "root";
-    private final String password = "1234";
+public abstract class UserDao {
 
-    // 🔹 중복된 DB 연결 코드 제거
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(url, userName, password);
-    }
+    //  하위 클래스에서 구현해야 하는 메소드 (DB 연결 방식 결정)
+    protected abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection();  //  중복 제거: getConnection() 사용
+        Connection c = getConnection(); // 하위 클래스에서 구현한 DB 연결 방식 사용
         PreparedStatement ps = c.prepareStatement("INSERT INTO users(id, name, password) VALUES (?, ?, ?)");
         ps.setString(1, user.getId());
         ps.setString(2, user.getName());
@@ -27,7 +21,7 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection();  // 중복 제거: getConnection() 사용
+        Connection c = getConnection(); // 하위 클래스에서 구현한 DB 연결 방식 사용
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?");
         ps.setString(1, id);
 
