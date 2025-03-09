@@ -4,15 +4,15 @@ import com.example.objecttesk.domain.User;
 import java.sql.*;
 
 public class UserDao {
-    private final SimpleConnectionMaker connectionMaker;
+    private final ConnectionMaker connectionMaker;
 
-    // 🔹 생성자에서 `SimpleConnectionMaker` 인스턴스를 생성
-    public UserDao() {
-        this.connectionMaker = new SimpleConnectionMaker();
+    // 생성자를 통해 `ConnectionMaker` 주입받음
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = connectionMaker.makeNewConnection(); //  DB 연결 생성
+        Connection c = connectionMaker.makeConnection(); // 인터페이스 사용
         PreparedStatement ps = c.prepareStatement("INSERT INTO users(id, name, password) VALUES (?, ?, ?)");
         ps.setString(1, user.getId());
         ps.setString(2, user.getName());
@@ -24,7 +24,7 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = connectionMaker.makeNewConnection(); //  DB 연결 생성
+        Connection c = connectionMaker.makeConnection(); // 인터페이스 사용
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?");
         ps.setString(1, id);
 

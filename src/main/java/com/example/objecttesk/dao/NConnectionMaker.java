@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class NUserDao extends UserDao {
+public class NConnectionMaker implements ConnectionMaker {
     @Override
-    protected Connection getConnection() throws SQLException, ClassNotFoundException {
-        String url = "jdbc:mysql://localhost:3306/spring_tobi_2"; // 다른 DB 사용
+    public Connection makeConnection() throws ClassNotFoundException, SQLException {
+        String url = "jdbc:mysql://localhost:3306/spring_tobi_2";
         String user = "root";
         String password = "1234";
 
