@@ -3,13 +3,16 @@ package com.example.objecttesk.dao;
 import com.example.objecttesk.domain.User;
 import java.sql.*;
 
-public abstract class UserDao {
+public class UserDao {
+    private final SimpleConnectionMaker connectionMaker;
 
-    //  하위 클래스에서 구현해야 하는 메소드 (DB 연결 방식 결정)
-    protected abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+    // 🔹 생성자에서 `SimpleConnectionMaker` 인스턴스를 생성
+    public UserDao() {
+        this.connectionMaker = new SimpleConnectionMaker();
+    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection(); // 하위 클래스에서 구현한 DB 연결 방식 사용
+        Connection c = connectionMaker.makeNewConnection(); //  DB 연결 생성
         PreparedStatement ps = c.prepareStatement("INSERT INTO users(id, name, password) VALUES (?, ?, ?)");
         ps.setString(1, user.getId());
         ps.setString(2, user.getName());
@@ -21,7 +24,7 @@ public abstract class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection(); // 하위 클래스에서 구현한 DB 연결 방식 사용
+        Connection c = connectionMaker.makeNewConnection(); //  DB 연결 생성
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?");
         ps.setString(1, id);
 
