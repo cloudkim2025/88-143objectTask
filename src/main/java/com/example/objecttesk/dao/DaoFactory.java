@@ -1,9 +1,18 @@
 package com.example.objecttesk.dao;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class DaoFactory {
+    @Bean
     public UserDao userDao() {
-        // DConnectionMaker를 사용하여 ConnectionMaker 객체 생성 후 UserDao에 주입
-        ConnectionMaker connectionMaker = new DConnectionMaker();
-        return new UserDao(connectionMaker);
+        return new UserDao(connectionMaker());
+    }
+
+    // ConnectionMaker 객체 생성 로직을 한 곳으로 분리
+    @Bean
+    public ConnectionMaker connectionMaker() {
+        return new DConnectionMaker();
     }
 }

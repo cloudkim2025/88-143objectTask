@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'application'  // ✅ 추가
+    id 'application'
 }
 
 group = 'com.example'
@@ -22,6 +22,10 @@ configurations {
 
 repositories {
     mavenCentral()
+    // 로컬 lib 폴더에 있는 jar 파일들을 참조하기 위한 flatDir 설정
+    flatDir {
+        dirs 'lib'
+    }
 }
 
 dependencies {
@@ -40,6 +44,15 @@ dependencies {
 
     // Spring Boot Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // lib 폴더에 있는 jar 파일들 의존성 추가 (파일명에서 .jar는 제외)
+    implementation name: 'com.springsource.net.sf.chlib-2.2.0'
+    implementation name: 'com.springsource.org.apache.commons.logging-1.1.1'
+    implementation name: 'org.springframework.asm-3.0.7.RELEASE'
+    implementation name: 'org.springframework.beans-3.0.7.RELEASE'
+    implementation name: 'org.springframework.context-3.0.7.RELEASE'
+    implementation name: 'org.springframework.core-3.0.7.RELEASE'
+    implementation name: 'org.springframework.expression-3.0.7.RELEASE'
 }
 
 application {
