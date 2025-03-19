@@ -45,7 +45,8 @@ dependencies {
     // Spring Boot Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // lib 폴더에 있는 jar 파일들 의존성 추가 (파일명에서 .jar는 제외)
+    // lib 폴더에 있는 jar 파일들 의존성 추가 (실제 파일이 없다면 주석 처리)
+    /*
     implementation name: 'com.springsource.net.sf.chlib-2.2.0'
     implementation name: 'com.springsource.org.apache.commons.logging-1.1.1'
     implementation name: 'org.springframework.asm-3.0.7.RELEASE'
@@ -53,6 +54,7 @@ dependencies {
     implementation name: 'org.springframework.context-3.0.7.RELEASE'
     implementation name: 'org.springframework.core-3.0.7.RELEASE'
     implementation name: 'org.springframework.expression-3.0.7.RELEASE'
+    */
 }
 
 application {
