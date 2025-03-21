@@ -1,5 +1,6 @@
 package com.example.objecttesk.dao;
 
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,19 +9,21 @@ public class CountingDaoFactory {
 
     @Bean
     public UserDao userDao() {
-        // ConnectionMaker로 CountingConnectionMaker를 주입한다.
-        return new UserDao(connectionMaker());
+        UserDao userDao = new UserDao();  // 기본 생성자 사용
+        // 수정자 메소드를 통해 DataSource를 주입합니다.
+        userDao.setDataSource(countingDataSource());
+        return userDao;
     }
 
     @Bean
-    public ConnectionMaker connectionMaker() {
-        // CountingConnectionMaker를 생성하는데, 내부에 실제 DB 연결 기능을 가진 DConnectionMaker를 주입한다.
-        return new CountingConnectionMaker(realConnectionMaker());
+    public DataSource countingDataSource() {
+        // CountingDataSource는 내부에 실제 DB 연결을 위한 DataSource (여기서는 DDataSource)를 DI 받습니다.
+        return new CountingDataSource(realDataSource());
     }
 
     @Bean
-    public ConnectionMaker realConnectionMaker() {
-        // 실제 DB 연결 기능을 담당하는 객체이다.
-        return new DConnectionMaker();
+    public DataSource realDataSource() {
+        // 실제 DB 연결 기능을 제공하는 객체 (예: DDataSource)
+        return new DDataSource();
     }
 }
